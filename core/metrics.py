@@ -7,10 +7,10 @@ class Metrics:
 
     @staticmethod
     def get_roc(dataset):
+        ys = pd.read_csv(dataset)
+        y_test = ys['real'].values
+        y_pred = ys['prediction'].values
         try:
-            ys = pd.read_csv(dataset)
-            y_test = ys['real'].values
-            y_pred = ys['prediction'].values
             auc = roc_auc_score(y_test, y_pred)
             if auc <= 0.5:
                 auc = 1 - auc

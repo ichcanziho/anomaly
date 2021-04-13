@@ -9,6 +9,7 @@ from joblib import Parallel, delayed
 class ADRanker(UtilMethods):
 
     def __init__(self, data, models):
+        self.n_cpus = 3
         self.input_folder = data
         self.datasets = self.get_folders(self.input_folder)
         self.models = models
@@ -106,7 +107,7 @@ class ADRanker(UtilMethods):
                     continue
                 tra, tst = get_tra_tst_files(f'{self.input_folder}/{dataset}')
 
-                Parallel(n_jobs=3) \
+                Parallel(n_jobs=self.n_cpus) \
                     (delayed(self.get_prediction)
                      (train_file=tra,
                       test_file=tst,
